@@ -1,6 +1,6 @@
-# CLAUDE.md
+# AGENTS.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to coding agents and engineers working with code in this repository.
 
 ## What this is
 
@@ -52,6 +52,43 @@ Confluence maps `/plugins/*` to the `none` decorator, so a plugin action page is
 ## Testing conventions
 
 JUnit 4 with plain `assert*` (no Mockito). `SpaceSettingsServiceTest` uses an in-memory `PluginSettingsFactory`/`PluginSettings` implementation; follow that pattern for new service tests. Tests touching `pagereview.gitlab.allowed-hosts` clear it in `@After`. `GitLabClientTest` starts a local JDK `com.sun.net.httpserver.HttpServer` and covers URL encoding, token transfer, and status mapping.
+
+## Documentation wiki (schema)
+
+Long-form documentation lives in `docs/`. The wiki follows the persistent-wiki pattern: the code
+and Confluence assets are the immutable source layer, `docs/` is the LLM-maintained wiki, and this
+file is the schema that defines how to maintain it.
+
+**Files**
+
+- `docs/index.md` — content catalog; read it first for any question and update it when pages are
+  added, removed, or re-scoped.
+- `docs/log.md` — append-only chronological record; never rewrite history, only append entries in
+  the form `## [YYYY-MM-DD] <create|update|restructure|lint> | <title>`.
+- `docs/*.md` — one topic per page; each ends with **Sources of truth** and, where useful,
+  **How to verify**.
+
+**Workflow**
+
+- **Query:** read `docs/index.md`, then only the relevant pages; cite file paths; fall back to the
+  code if a page and the code disagree. If an answer is reusable, file it as a new page or extend
+  an existing one, then update the index and the log.
+- **Ingest/update:** after a behavior change, update every affected page in the same commit,
+  update the index, and append an `update` entry to the log. New pages get an index entry and a
+  `create` entry.
+- **Lint (on request):** check for contradictions between pages, stale claims, orphan pages without
+  inbound links, important concepts missing a page, missing cross-references, and gaps. Report
+  findings before rewriting.
+- **Ownership:** agents maintain the wiki; humans curate tasks and review. The code is the source
+  of truth; the wiki records intent, invariants, and non-obvious behavior.
+
+**Rules**
+
+- Verify pages against a named commit (`Verified against code at commit ...`).
+- Prefer extending an existing page over creating a near-duplicate; rewrite summaries instead of
+  appending new sections indefinitely.
+- Keep links relative; reference code by path without line numbers.
+- No secrets, tokens, or personal data in the wiki.
 
 ## Constraints
 

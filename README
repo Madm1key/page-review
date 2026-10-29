@@ -13,6 +13,12 @@ The token is encrypted with AES-256-GCM before it is stored in SAL plugin settin
 
 The settings form has a "Check connection" button that verifies the token can read the configured project and branch in GitLab without saving the form.
 
+Documentation
+-------------
+
+The detailed wiki for engineers and AI agents starts at `docs/index.md`; the append-only change
+log is `docs/log.md`.
+
 Build and test
 --------------
 

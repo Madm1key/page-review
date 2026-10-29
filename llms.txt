@@ -1,0 +1,27 @@
+# page-review
+
+> Confluence 8.5 Server/Data Center plugin that stores per-space GitLab repository settings and validates the connection against the GitLab API.
+
+Documentation index for LLM agents and tools. The source code is the source of truth; the pages
+below explain intent, invariants, and non-obvious behavior.
+
+## Start here
+
+- [Wiki index](docs/index.md): content catalog grouped by category, reading paths, page conventions
+- [Wiki log](docs/log.md): append-only chronological record of wiki changes
+- [Architecture](docs/architecture.md): components, request flows, file map, invariants
+- [Build, test, run](docs/build-test-run.md): atlas-mvn commands, dev instance, QuickReload, test conventions
+
+## Reference
+
+- [Settings and secrets](docs/settings-and-secrets.md): storage keys, defaults, AES-GCM token encryption, key loss
+- [GitLab integration](docs/gitlab-integration.md): accepted URLs, API endpoints, timeouts, error mapping
+- [UI and rendering](docs/ui-and-rendering.md): Space Tools web item, XWork actions, SiteMesh decorator requirement, i18n
+- [Troubleshooting](docs/troubleshooting.md): symptom → cause → fix
+- [Glossary](docs/glossary.md): Confluence, OSGi, and GitLab terms used in this repository
+- [Decisions](docs/decisions.md): ADR-style rationale for the current design
+
+## Optional
+
+- [AGENTS.md](AGENTS.md): schema and working guide for coding agents (Claude Code loads it when no CLAUDE.md exists)
+- [README](README): project overview and quick commands
