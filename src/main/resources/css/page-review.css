@@ -1,0 +1,16 @@
+.page-review-busy {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.page-review-test-result {
+    margin-left: 10px;
+}
+
+.page-review-test-result.page-review-ok {
+    color: #006644;
+}
+
+.page-review-test-result.page-review-fail {
+    color: #bf2600;
+}

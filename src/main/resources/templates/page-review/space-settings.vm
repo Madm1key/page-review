@@ -1,0 +1,79 @@
+<html>
+<head>
+    <title>$action.getText("page-review.settings.title")</title>
+    $webResourceManager.requireResource("ru.mts.confluence.page-review:page-review-resources")
+</head>
+<body>
+#applyDecorator("root")
+    #decoratorParam("helper" $action.helper)
+    #decoratorParam("context" "space-administration")
+    #decoratorParam("mode" "view-space-administration")
+
+    #applyDecorator("root")
+        #decoratorParam("context" "spaceadminpanel")
+        #decoratorParam("selection" "page-review-settings")
+        #decoratorParam("title" $action.getText("page-review.settings.title"))
+        #decoratorParam("selectedTab" "admin")
+        #decoratorParam("helper" $action.helper)
+        #decoratorParam("selectedSpaceToolsWebItem" "page-review-settings")
+
+        <form class="aui page-review-settings" id="page-review-settings-form" action="save.action" method="post">
+            #form_xsrfToken()
+            <input type="hidden" name="key" value="$htmlUtil.htmlEncode($key)"/>
+
+            #if ($action.saved)
+                <div class="aui-message aui-message-success"><p>$action.getText("page-review.settings.saved")</p></div>
+            #end
+            #if ($action.hasActionErrors())
+                <div class="aui-message aui-message-error">
+                    #foreach ($err in $action.actionErrors)<p>$htmlUtil.htmlEncode($err)</p>#end
+                </div>
+            #end
+
+            <h2>$action.getText("page-review.settings.title")</h2>
+            <p class="description">$action.getText("page-review.settings.intro")</p>
+
+            <div class="checkbox">
+                <input class="checkbox" type="checkbox" id="pr-enabled" name="enabled" value="true" #if ($action.enabled)checked="checked"#end/>
+                <label for="pr-enabled">$action.getText("page-review.settings.enabled")</label>
+            </div>
+
+            <div class="field-group">
+                <label for="pr-repoUrl">$action.getText("page-review.settings.repo")</label>
+                <input class="text long-field" type="text" id="pr-repoUrl" name="repoUrl" value="$htmlUtil.htmlEncode($!action.repoUrl)" placeholder="https://gitlab.example.com/group/repo"/>
+                #foreach ($err in $action.getFieldErrors().get("repoUrl"))<div class="error">$htmlUtil.htmlEncode($err)</div>#end
+                <div class="description">$action.getText("page-review.settings.repo.hint")</div>
+            </div>
+
+            <div class="field-group">
+                <label for="pr-targetBranch">$action.getText("page-review.settings.branch")</label>
+                <input class="text medium-field" type="text" id="pr-targetBranch" name="targetBranch" value="$htmlUtil.htmlEncode($!action.targetBranch)"/>
+                #foreach ($err in $action.getFieldErrors().get("targetBranch"))<div class="error">$htmlUtil.htmlEncode($err)</div>#end
+            </div>
+
+            <div class="field-group">
+                <label for="pr-baseFolder">$action.getText("page-review.settings.folder")</label>
+                <input class="text medium-field" type="text" id="pr-baseFolder" name="baseFolder" value="$htmlUtil.htmlEncode($!action.baseFolder)"/>
+                #foreach ($err in $action.getFieldErrors().get("baseFolder"))<div class="error">$htmlUtil.htmlEncode($err)</div>#end
+                <div class="description">$action.getText("page-review.settings.folder.hint")</div>
+            </div>
+
+            <div class="field-group">
+                <label for="pr-token">$action.getText("page-review.settings.token")</label>
+                <input class="text long-field" type="password" id="pr-token" name="token" value="" autocomplete="new-password"
+                       placeholder="#if ($action.tokenSet)$action.getText('page-review.settings.token.set')#end"/>
+                <div class="description">$action.getText("page-review.settings.token.hint")</div>
+            </div>
+
+            <div class="buttons-container">
+                <div class="buttons">
+                    <input class="aui-button aui-button-primary" type="submit" value="$action.getText('page-review.settings.save')"/>
+                    <button type="button" class="aui-button" id="page-review-test" data-space-key="$htmlUtil.htmlEncode($key)">$action.getText("page-review.settings.test")</button>
+                    <span id="page-review-test-result" class="page-review-test-result"></span>
+                </div>
+            </div>
+        </form>
+    #end
+#end
+</body>
+</html>
