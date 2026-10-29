@@ -9,31 +9,7 @@
 
     <resource type="i18n" name="i18n" location="page-review"/>
 
-    <web-resource key="page-review-resources" name="page-review Web Resources">
-        <transformation extension="js">
-            <transformer key="jsI18n"/>
-        </transformation>
-        <dependency>com.atlassian.auiplugin:ajs</dependency>
-        <dependency>com.atlassian.auiplugin:aui-flag</dependency>
-
-        <resource type="download" name="page-review.css" location="/css/page-review.css"/>
-        <resource type="download" name="page-review.js" location="/js/page-review.js"/>
-        <resource type="download" name="images/" location="/images"/>
-
-        <context>page</context>
-    </web-resource>
-
-    <!-- button on the page view -->
-    <web-item key="page-review-send-button" name="Send page to GitLab" section="system.content.button" weight="250">
-        <label key="page-review.button.label"/>
-        <tooltip key="page-review.button.tooltip"/>
-        <link linkId="page-review-send">#</link>
-        <styleClass>page-review-send</styleClass>
-        <condition class="ru.mts.confluence.web.PageReviewCondition"/>
-    </web-item>
-
-    <!-- space tools entry (space admins only) -->
-    <web-item key="page-review-space-tools" name="GitLab MR space settings" section="system.space.tools/addons" weight="250">
+    <web-item key="page-review-space-tools" name="GitLab repository settings" section="system.space.tools/addons" weight="250">
         <label key="page-review.settings.menu"/>
         <link linkId="page-review-settings">/plugins/page-review/settings.action?key=$space.key</link>
         <condition class="com.atlassian.confluence.plugin.descriptor.web.conditions.SpacePermissionCondition">
@@ -41,26 +17,26 @@
         </condition>
     </web-item>
 
-    <xwork key="page-review-actions" name="GitLab MR space settings actions">
+    <xwork key="page-review-actions" name="GitLab repository settings actions">
         <package name="page-review" extends="default" namespace="/plugins/page-review">
             <default-interceptor-ref name="validatingStack"/>
 
-            <action name="settings" class="ru.mts.confluence.web.SpaceSettingsAction" method="default">
-                <external-ref name="spaceSettingsService">spaceSettingsService</external-ref>
-                <result name="success" type="velocity">/templates/page-review/space-settings.vm</result>
-            </action>
-
-            <action name="save" class="ru.mts.confluence.web.SpaceSettingsAction" method="save">
+            <action name="settings" class="ru.mts.confluence.web.SpaceSettingsAction" method="doDefault">
                 <external-ref name="spaceSettingsService">spaceSettingsService</external-ref>
                 <result name="input" type="velocity">/templates/page-review/space-settings.vm</result>
                 <result name="success" type="velocity">/templates/page-review/space-settings.vm</result>
             </action>
+
+            <action name="save" class="ru.mts.confluence.web.SpaceSettingsAction" method="doSave">
+                <external-ref name="spaceSettingsService">spaceSettingsService</external-ref>
+                <result name="input" type="velocity">/templates/page-review/space-settings.vm</result>
+                <result name="success" type="velocity">/templates/page-review/space-settings.vm</result>
+            </action>
+
+            <action name="validate" class="ru.mts.confluence.web.SpaceSettingsAction" method="doValidate">
+                <external-ref name="spaceSettingsService">spaceSettingsService</external-ref>
+                <result name="success" type="velocity">/templates/page-review/space-settings.vm</result>
+            </action>
         </package>
     </xwork>
-
-    <rest key="page-review-rest" path="/page-review" version="1.0">
-        <description>Send pages to GitLab as merge requests</description>
-        <package>ru.mts.confluence.rest</package>
-    </rest>
-
 </atlassian-plugin>

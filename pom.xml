@@ -15,7 +15,7 @@
     </organization>
 
     <name>page-review</name>
-    <description>This is the ru.mts.confluence:page-review plugin for Atlassian Confluence.</description>
+    <description>Per-space GitLab repository settings for Atlassian Confluence.</description>
     <packaging>atlassian-plugin</packaging>
 
     <dependencyManagement>
@@ -36,13 +36,11 @@
             <artifactId>confluence</artifactId>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>com.atlassian.plugins</groupId>
             <artifactId>atlassian-plugins-osgi-javaconfig</artifactId>
             <version>${osgi.javaconfig.version}</version>
         </dependency>
-        <!-- OSGi Java Config dependencies -->
         <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>osgi.core</artifactId>
@@ -58,33 +56,9 @@
             <artifactId>spring-context</artifactId>
             <scope>provided</scope>
         </dependency>
-
-        <!-- WIRED TEST RUNNER DEPENDENCIES -->
-        <dependency>
-            <groupId>com.atlassian.plugins</groupId>
-            <artifactId>atlassian-plugins-osgi-testrunner</artifactId>
-            <version>${plugin.testrunner.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.ws.rs</groupId>
-            <artifactId>jsr311-api</artifactId>
-            <version>1.1.1</version>
-            <scope>provided</scope>
-        </dependency>
         <dependency>
             <groupId>com.atlassian.sal</groupId>
             <artifactId>sal-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.atlassian.plugins.rest</groupId>
-            <artifactId>atlassian-rest-common</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -93,30 +67,6 @@
             <version>4.0.0</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-            <version>${jsoup.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.vladsch.flexmark</groupId>
-            <artifactId>flexmark-html2md-converter</artifactId>
-            <version>${flexmark.version}</version>
-            <scope>compile</scope>
-        </dependency>
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -142,30 +92,16 @@
                     <productVersion>${confluence.version}</productVersion>
                     <productDataVersion>${confluence.data.version}</productDataVersion>
                     <enableQuickReload>true</enableQuickReload>
-
-                    <!-- See here for an explanation of default instructions: -->
-                    <!-- https://developer.atlassian.com/docs/advanced-topics/configuration-of-instructions-in-atlassian-plugins -->
                     <instructions>
                         <Atlassian-Plugin-Key>${atlassian.plugin.key}</Atlassian-Plugin-Key>
-
-                        <Embed-Dependency>jsoup,flexmark-html2md-converter,flexmark,flexmark-util*,flexmark-ext-*,flexmark-formatter,flexmark-html2md*;scope=compile|runtime</Embed-Dependency>
-                        <Embed-Transitive>true</Embed-Transitive>
-
-                        <!-- Add package import here -->
                         <Import-Package>
+                            com.atlassian.confluence.plugin.descriptor.web.conditions,
                             org.springframework.osgi.*;resolution:="optional",
                             org.eclipse.gemini.blueprint.*;resolution:="optional",
-                            org.jspecify.annotations.*;resolution:="optional",
-                            java.awt.*;resolution:="optional",
-                            javax.swing.*;resolution:="optional",
-                            javax.imageio.*;resolution:="optional",
                             *
                         </Import-Package>
-
-                        <!-- Ensure plugin is spring powered -->
                         <Spring-Context>*</Spring-Context>
                     </instructions>
-
                 </configuration>
             </plugin>
         </plugins>
@@ -175,14 +111,9 @@
         <confluence.version>8.5.31</confluence.version>
         <confluence.data.version>${confluence.version}</confluence.data.version>
         <amps.version>9.11.2</amps.version>
-        <plugin.testrunner.version>2.0.16</plugin.testrunner.version>
         <osgi.javaconfig.version>0.6.0</osgi.javaconfig.version>
-        <jsoup.version>1.18.3</jsoup.version>
-        <flexmark.version>0.64.8</flexmark.version>
-        <!-- This property ensures consistency between the key in atlassian-plugin.xml and the OSGi bundle's key. -->
         <atlassian.plugin.key>${project.groupId}.${project.artifactId}</atlassian.plugin.key>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>11</maven.compiler.release>
     </properties>
-
 </project>
