@@ -1,5 +1,6 @@
 package ru.mts.confluence.gitlab;
 
+/** A failed GitLab API call. */
 public class GitLabException extends Exception {
     private final int status;
 
@@ -13,7 +14,7 @@ public class GitLabException extends Exception {
         this.status = -1;
     }
 
-    /** HTTP status returned by GitLab, or -1 for connection problems. */
+    /** HTTP status returned by GitLab, or -1 when GitLab could not be reached. */
     public int getStatus() {
         return status;
     }

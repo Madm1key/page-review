@@ -40,6 +40,9 @@ public class GitLabRepo {
         if (!"https".equalsIgnoreCase(uri.getScheme()) || uri.getHost() == null) {
             throw new IllegalArgumentException("https");
         }
+        if (uri.getUserInfo() != null || uri.getQuery() != null || uri.getFragment() != null) {
+            throw new IllegalArgumentException("components");
+        }
         checkAllowedHost(uri.getHost());
         String path = uri.getPath() == null ? "" : uri.getPath();
         while (path.startsWith("/")) {
