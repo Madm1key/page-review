@@ -26,3 +26,11 @@ Entry format: `## [YYYY-MM-DD] <create|update|restructure|lint> | <title>`.
 - Moved wiki conventions, update workflow, and the lint procedure into `AGENTS.md` (the schema
   layer), including rules for filing reusable answers back and extending pages before duplicating.
 - Updated `llms.txt` and the root `README` to point at `docs/index.md`.
+
+## [2026-10-30] update | Condensed AGENTS.md and component-import wiring
+
+- Reduced `AGENTS.md` from 98 to 41 lines: project summary, build/test commands, five critical
+  editing invariants, and the wiki workflow; details stay in `docs/`.
+- `AGENTS.md` and `docs/architecture.md` now describe OSGi services imported via
+  `<component-import>` in `atlassian-plugin.xml`, with `PageReviewJavaConfig` injecting
+  `PluginSettingsFactory`.
